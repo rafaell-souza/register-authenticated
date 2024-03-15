@@ -24,7 +24,13 @@ const registrations = database.define('registrations', {
     number: {
         type: Sequelize.STRING(10),
         allowNull: false
+    },
+    permission: {
+        type: Sequelize.ENUM('standard', 'premium'),
+        allowNull: false,
+        defaultValue: 'standard'
     }
+    
 },  {timestamps: false}
 )
 

@@ -19,6 +19,8 @@ module.exports = {
     },
 
 
+
+
     async GetOne(req, res) {
 
     const results = {error: '', results:[]};
@@ -46,38 +48,73 @@ module.exports = {
     },
 
 
+
+
     async create(req, res) {
 
     const results = {error:'', results: []}
-    const {name, password, email, number} = req.body;
+    const {name, password, email, number, permission} = req.body;
 
         try {
             if(!name || !password || !email || !number) {
-            results.error = 'Please, make sure to fill all the fields.'
+            results.error = 'Please, make sure to fill the required fields.'
             return res.status(400).json(results.error)
             }
 
-            const checkEmail = await registrations.findAll(
+            const checkEmail = await registrations.findOne(
             {where:{email: email}})
 
             if(checkEmail) {
             results.error = 'This email has already been registered'
             return res.status(400).json(results.error)
             }
-
-            if(name && password && email && number) {
+            else {
             results.results = await registrations.create({
-            name: name,
-            email: email,
-            password: password,
-            number: number
-            })
+            name: name, email: email, 
+            password: password, number: number,
+            permission: permission || 'standard'})
+
+            return res.status(201).json(results.results)
             }
+            
 
         } catch (error) {
             console.log(error)
             results.error = 'Server internal error'
             return res.status(500).json(results.error)
         }
-    }
+    },
+
+
+
+
+    async update(req, res) {
+
+    const results = {error:'', results:[]};
+    const {id} = req.params;
+    const {name, password, email, number, permission} = req.body
+
+    try {
+
+        if(!name || !password || !email || !number || !permission){
+            results.error = 'All the required fields must to be filled.'
+            return res.status(400).json(results.error)
+        }
+        else {
+            results.results = await registrations.update({
+                name: name,
+                email: email,
+                password: password,
+                number: number,
+                permission: permission},
+            {where:{id: id}})
+
+            return res.status(200).json(results.results)
+        }
+
+    } catch (error) {
+         console.error(error)
+         results.error = 'server internal error at put method.'
+         return res.status(500).json(results.results)
+    }}
 }
