@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize')
-const connection = require('../sequelize/config/config')
 
 const db = new Sequelize('codespace', 'root', '', {
     host: 'localhost',

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
-const db = require('../config/config')
+const database = require('../../database/configs')
 
-const registration = db.define('registration', {
+const registrations = database.define('registrations', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -25,8 +25,8 @@ const registration = db.define('registration', {
         type: Sequelize.STRING(10),
         allowNull: false
     }
-},
-{timestamps: false})
+},  {timestamps: false}
+)
 
 
-module.exports = registration
+module.exports = registrations
