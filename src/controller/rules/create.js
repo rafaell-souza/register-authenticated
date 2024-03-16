@@ -1,5 +1,6 @@
 const db = require('../../../database/configs');
 const registrations = require('../../../sequelize/models/registrations')
+const bcrypt = require('bcrypt')
 
 module.exports = {
 
@@ -21,10 +22,15 @@ module.exports = {
                 results.error = 'This email has already been registered'
                 return res.status(400).json(results.error)
                 }
+
                 else {
+                const hashedPassword = await bcrypt.hash(password, 10)
+
                 results.results = await registrations.create({
-                name: name, email: email, 
-                password: password, number: number,
+                name: name, 
+                email: email, 
+                password: hashedPassword, 
+                number: number,
                 permission: permission || 'standard'})
     
                 return res.status(201).json(results.results)
