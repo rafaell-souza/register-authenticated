@@ -5,7 +5,9 @@ const db = new Sequelize('codespace', 'root', '', {
     dialect: 'mysql'
 })
 
-//testing whether the connection is working
+//it tests whether the connection is worling.
+
+/*
 async function testDb() {
     try {
         await db.authenticate()
@@ -16,6 +18,7 @@ async function testDb() {
     }
 }
 testDb()
+*/
 
 
 module.exports = db
