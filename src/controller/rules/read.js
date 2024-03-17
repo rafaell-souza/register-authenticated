@@ -4,24 +4,22 @@ const registrations = require('../../../sequelize/models/registrations')
 module.exports = {
 
     
-    async GetAll(req, res) {
+        async GetAll(req, res) {
 
-        const results = {error: '', results:[]};
+                const results = {error: '', results:[]};
     
             try {
                 results.results = await registrations.findAll();
                 return res.status(200).json(results.results);
                 
             } catch (error) {
-                results.error = 'Internal error.'
-                console.error('failed', error);
+                results.error = 'Server Internal error.'
+                console.error(error);
                 res.status(500).json(results.error);
             }
         },
     
-    
-    
-    
+
         async GetOne(req, res) {
     
         const results = {error: '', results:[]};
@@ -31,7 +29,7 @@ module.exports = {
                 const checkId = await registrations.findOne({ where: {id: id}})
     
                 if(!checkId) {
-                results.error = "Id not found."
+                results.error = "User not found."
                 return res.status(404).json(results.error)
                 }
     
