@@ -22,7 +22,7 @@ const registrations = database.define('registrations', {
         allowNull: false
     },
     number: {
-        type: Sequelize.STRING(10),
+        type: Sequelize.STRING(20),
         allowNull: false
     }
     

@@ -46,8 +46,9 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(password, 10);
             fields.password = hashedPassword;
 
-            if (!/^\d{10}$/.test(number)) {
-                return res.status(400).json({ error: 'Number must be a 10-digit integer.' })
+            
+            if(!/\(\d{3}\) \d{3}-\d{4}/.test(number)){
+                return res.status(404).json({ error: 'invalid number format'})
             }
             fields.number = number;
 
