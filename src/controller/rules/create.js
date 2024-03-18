@@ -13,7 +13,7 @@ module.exports = {
             }
 
                                 // fields validation
-            const fields = {}; // it will receive all fields (name, password, email, number)
+            const fields = {}; // it will receive the fields if conditionss ok
 
             if (name) {
                 if(name.length >40){
@@ -33,7 +33,7 @@ module.exports = {
                 return res.status(400).json({error: 'Invalid email format.'})
                 }
 
-                else {         // it verifies whether the email has already been registered.
+                else {  //it verifies whether the email has already been registered.
                 const checkEmail = await registrations.findOne({where: {email: email}})
 
                 if(checkEmail){     // this 'if' is inside that 'else' above
@@ -43,12 +43,12 @@ module.exports = {
 
 
             if (password) {
-                if(password <8 && password >12){
+                if(password.length <8 || password.length >12){
                 return res.status(400).json({ error: 'Password must be between 8 and 12 characters.' })
                 }
 
                 else if (!/\d(?=.*[a-zA-Z0-9><=&%$#@!\+\?\*\(\)\.,\[\]\-_\^`~\/\\])/.test(password)) {
-                return res.status(400).json({error: 'It is recomended to use numbers, letters and specials characters.'})
+                return res.status(400).json({error: 'It is recomended to use numbers, letters and specials characters for the password.'})
                 }
                 else {const hashedPassword = await bcrypt.hash(password, 10);
                 fields.password = hashedPassword}; // password encrypted
