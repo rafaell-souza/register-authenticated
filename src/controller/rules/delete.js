@@ -14,7 +14,7 @@ module.exports = {
     
         } catch (error) {
             console.error(error);
-            res.status(500).json('Server internal error')
+            res.status(500).json(error)
         }
     
         }

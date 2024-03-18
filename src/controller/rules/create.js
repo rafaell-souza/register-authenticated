@@ -12,48 +12,57 @@ module.exports = {
                 return res.status(400).json({ Error: 'All fields must be filled.' })
             }
 
-            // fields validation
-            const fields = {};
+                                // fields validation
+            const fields = {}; // it will receive all fields (name, password, email, number)
 
-            if (name.length > 40) {
-                return res.status(400).json({ error: 'Name cannot exceed 40 characters.' })
-            }
-            if (!/^[a-zA-Z\s]+$/.test(name)) {
-                return res.status(400).json({ error: 'Name can only accept letters' })
-            }
-            fields.name = name;
+            if (name) {
+                if(name.length >40){
+                return res.status(400).json({error: 'Name cannot exceed 40 characters.'})
+                }
+                else if(!/[a-zA=Z|\s]$/.test(name)){
+                return res.status(400).json({error:'Name only accept letters and spaces'})
+                }
+            }   fields.name = name;
 
-            if (email.length > 250) {
-                return res.status(400).json({ error: 'Email cannot exceed 250 characters.' })
-            }
-            if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/.test(email)) {
-                return res.status(400).json({ error: 'Invalid email format.' })
-            }
 
-            const checkEmail = await registrations.findOne({where: {email: email}})
-            if(checkEmail){
-                return res.status(400).json({ error: 'This email already exists'})
-            }
+            if (email) {
+                if(email.length >250){
+                return res.status(400).json({error: 'Email cannot exceed 250 characters.'})
+                }
+                else if(!/[a-zA-Z0-9.]@(gmail)\.(com)$/.test(email)){
+                return res.status(400).json({error: 'Invalid email format.'})
+                }
 
-            fields.email = email;
+                else {         // it verifies whether the email has already been registered.
+                const checkEmail = await registrations.findOne({where: {email: email}})
 
-            if (password.length < 8 || password.length > 12) {
+                if(checkEmail){     // this 'if' is inside that 'else' above
+                return res.status(400).json({error:'Email already registered.'})
+                }}
+            }   fields.email = email
+
+
+            if (password) {
+                if(password <8 && password >12){
                 return res.status(400).json({ error: 'Password must be between 8 and 12 characters.' })
-            }
-            if (!/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
-                return res.status(400).json({ error: 'Password must contain at least one digit and one letter.' })
-            }
-            const hashedPassword = await bcrypt.hash(password, 10);
-            fields.password = hashedPassword;
+                }
 
-            
-            if(!/\(\d{3}\) \d{3}-\d{4}/.test(number)){
-                return res.status(404).json({ error: 'invalid number format'})
+                else if (!/\d(?=.*[a-zA-Z0-9><=&%$#@!\+\?\*\(\)\.,\[\]\-_\^`~\/\\])/.test(password)) {
+                return res.status(400).json({error: 'It is recomended to use numbers, letters and specials characters.'})
+                }
+                else {const hashedPassword = await bcrypt.hash(password, 10);
+                fields.password = hashedPassword}; // password encrypted
             }
-            fields.number = number;
+
+            if(number){
+                if(!/\(\d{3}\) \d{3}-\d{4}/.test(number)){  // US number format
+                return res.status(404).json({ error: 'number must to be in (XXX) XXX-XXXX format.'})
+                }
+            }   fields.number = number;
 
             const results = await registrations.create(fields);
             return res.status(201).json(results);
+            
 
         } catch (error) {
             console.log(error);

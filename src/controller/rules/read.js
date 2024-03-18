@@ -5,17 +5,14 @@ module.exports = {
 
     
         async GetAll(req, res) {
-
-                const results = {error: '', results:[]};
     
             try {
-                results.results = await registrations.findAll();
-                return res.status(200).json(results.results);
+                results = await registrations.findAll();
+                return res.status(200).json(results);
                 
             } catch (error) {
-                results.error = 'Server Internal error.'
                 console.error(error);
-                res.status(500).json(results.error);
+                res.status(500).json(error);
             }
         },
     
@@ -41,8 +38,7 @@ module.exports = {
     
             } catch (error) {
                 console.error(error);
-                results.error = 'Server internal error'
-                return res.status(500).json({error: results.error})
+                return res.status(500).json({error: error})
             }
         },
     
