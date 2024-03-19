@@ -1,12 +1,17 @@
 const {Router} = require('express')
 const router = Router()
 
-const { GetAll, GetOne, updateSome, updateAll, create, exclude } = require('../controller/controllers')
+//Middlewares
+const {UserExistence} = require('../middlewares/user_existence')
+const {FieldsFormats} = require('../middlewares/fieldsformats')
+
+const{GetAll, GetOne, updateAll, create, exclude}=require('../controller/controllers')
 
 router.get('/registration', GetAll)
-router.get('/registration/:id', GetOne)
-router.post('/registration', create)
+router.get('/registration/:id', UserExistence, GetOne)
+router.post('/registration', FieldsFormats , create)
 router.put('/registration/:id', updateAll)
 router.delete('/registration/:id', exclude)
+
 
 module.exports = router
