@@ -40,7 +40,7 @@ module.exports = {
 
             if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[><=&%$#@!\+\?\*\(\)\.,\[\]\-_\^`~\/\\])/.test(password)){
 
-            return res.status(400).json({error: 'It is recomended to use numbers, letters and specials characters for the password.'})
+            return res.status(400).json({error: 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.'})
             }
                 
             //Number validation
