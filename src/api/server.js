@@ -7,7 +7,6 @@ const bodyparser = require('body-parser')
 
 server.use(bodyparser.urlencoded({extended: true}))
 server.use(routes)
-server.use(express.json())
 
 
 

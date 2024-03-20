@@ -3,15 +3,21 @@ const router = Router()
 
 //Middlewares
 const {UserExistence} = require('../middlewares/user_existence')
-const {FieldsFormats} = require('../middlewares/fieldsformats')
+const {FieldsValidation} = require('../middlewares/fieldsvalidation')
+
+//security
+const {Auth} = require('../security/jwt')
 
 const{GetAll, GetOne, updateAll, create, exclude}=require('../controller/controllers')
 
-router.get('/registration', GetAll)
-router.get('/registration/:id', UserExistence, GetOne)
-router.post('/registration', FieldsFormats , create)
-router.put('/registration/:id', FieldsFormats, updateAll)
-router.delete('/registration/:id', exclude)
+router.get('/registrations', GetAll)
+router.get('/registrations/:id', UserExistence, GetOne)
+
+router.post('/registrations/sign-in', Auth)
+router.post('/registrations/sign-up', FieldsValidation, create)
+
+router.put('/registrations/:id', UserExistence, FieldsValidation, updateAll)
+router.delete('/registrations/:id', exclude)
 
 
 module.exports = router

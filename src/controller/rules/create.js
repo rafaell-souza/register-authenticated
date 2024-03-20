@@ -17,7 +17,7 @@ module.exports = {
         email: email
         })
 
-        res.status(201).json(newUser)
+        return res.status(201).json(newUser)
 
         } 
         catch (error) {

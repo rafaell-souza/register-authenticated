@@ -8,7 +8,7 @@ module.exports = {
     try {
       
         const {id} = req.params;
-        const { name, password, email, number} = req.body;
+        const {name, password, email, number} = req.body;
 
         const hashedPassword = await bcrypt.hash(password, 10)
 

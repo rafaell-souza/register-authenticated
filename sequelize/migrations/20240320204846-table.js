@@ -1,10 +1,9 @@
 'use strict';
 
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('registrations', { 
-
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -25,11 +24,13 @@ module.exports = {
         allowNull: false
     },
     number: {
-        type: Sequelize.STRING(10),
+        type: Sequelize.STRING(20),
         allowNull: false
     }
-},  {timestamps: false})
-  
+    
+},  {timestamps: false}
+     );
+
   },
 
   async down (queryInterface, Sequelize) {
