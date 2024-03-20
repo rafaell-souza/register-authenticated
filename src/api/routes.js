@@ -10,7 +10,7 @@ const{GetAll, GetOne, updateAll, create, exclude}=require('../controller/control
 router.get('/registration', GetAll)
 router.get('/registration/:id', UserExistence, GetOne)
 router.post('/registration', FieldsFormats , create)
-router.put('/registration/:id', updateAll)
+router.put('/registration/:id', FieldsFormats, updateAll)
 router.delete('/registration/:id', exclude)
 
 

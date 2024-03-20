@@ -38,7 +38,7 @@ module.exports = {
             return res.status(400).json({ error: 'Password must be between 8 and 12 characters.' })
             }
 
-            if(!/\d([a-zA-Z0-9><=&%$#@!\+\?\*\(\)\.,\[\]\-_\^`~\/\\])/.test(password)){
+            if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[><=&%$#@!\+\?\*\(\)\.,\[\]\-_\^`~\/\\])/.test(password)){
 
             return res.status(400).json({error: 'It is recomended to use numbers, letters and specials characters for the password.'})
             }
