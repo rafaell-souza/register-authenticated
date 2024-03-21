@@ -18,7 +18,7 @@ const registrations = database.define('registrations', {
         allowNull: false
     },
     password: {
-        type: Sequelize.STRING(12),
+        type: Sequelize.STRING(70),
         allowNull: false
     },
     number: {

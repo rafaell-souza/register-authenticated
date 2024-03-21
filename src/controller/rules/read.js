@@ -1,6 +1,4 @@
 registrations = require('../../../sequelize/models/registrations')
-const { UserExistence } = require('../../middlewares/user_existence')
-
 
 module.exports = {
 
@@ -23,7 +21,8 @@ module.exports = {
         try {
 
             const { id } = req.params
-            const userById = await registrations.findByPk(id);
+            const userById = await registrations.findByPk(id, {attributes: 
+            ['id','name', 'email', 'number']});
 
             return res.status(200).json(userById);
             } 
