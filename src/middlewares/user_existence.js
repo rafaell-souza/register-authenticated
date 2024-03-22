@@ -2,7 +2,7 @@ const registrations = require('../../sequelize/models/registrations')
 
 module.exports = {
 
-    async UserExistence(req, res, next){
+    async UserCheck(req, res, next){
     try {
         const { id } = req.params
 
