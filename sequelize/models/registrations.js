@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
-const database = require('../../database/configs')
+import Sequelize from 'sequelize'
+import connection from '../../database/connection.js'
 
-const registrations = database.define('registrations', {
+const registrations = connection.define('registrations', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -29,5 +29,4 @@ const registrations = database.define('registrations', {
 },  {timestamps: false}
 )
 
-
-module.exports = registrations
+export default registrations

@@ -1,8 +1,8 @@
-const express= require('express')
+import 'dotenv/config'
+import express from 'express'
 const server = express()
-const PORT = 3333
-const routes = require('./routes')
-const bodyparser = require('body-parser')
+import routes from './routes.js'
+import bodyparser from 'body-parser'
 
 
 server.use(bodyparser.urlencoded({extended: true}))
@@ -12,6 +12,6 @@ server.use(routes)
 
 
 
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`)
+server.listen(process.env.PORT, () => {
+console.log(`Server running at http://localhost:${process.env.PORT}`)
 })

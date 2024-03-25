@@ -1,22 +1,23 @@
-const {Router} = require('express')
-const router = Router()
-const {UserCheck} = require('../middlewares/user_existence')
-const {FieldsValidation} = require('../middlewares/fieldsvalidation')
-const {Authentication} = require('../middlewares/authentication')
-const {Login} = require('../security/jwt')
-const {authorization} = require('../middlewares/authorization')
-const{GetAll, GetOne, updateAll, create, exclude}=require('../controller/controllers')
+import {Router} from 'express' 
 
+// import middlewares
+import { Authentication } from '../../middlewares/authentication.js'
+import { Authorization } from '../../middlewares/authorization.js'
+import { VerifyFields } from '../../middlewares/fieldsvalidation.js'
+// import controllers
+import { Controllers } from '../controller/rules.js'
 
-router.get('/registrations', GetAll)
-router.get('/registrations/:id', authorization, UserCheck, GetOne)
+const controllers = new Controllers() 
+const routes = Router()
 
-router.post('/registrations/sign-in', Authentication, Login)
-router.post('/registrations/sign-up', FieldsValidation, create)
+// main route
+routes.get('/registrations', (req, res) => {res.json('Sign up to our website!')})
 
-router.put('/registrations/:id', UserCheck, FieldsValidation, updateAll)
-router.delete('/registrations/:id', UserCheck, exclude)
+routes.get('/profiles',Authorization, controllers.GetAll)
+routes.get('/profiles/:id', Authorization, controllers.GetOne)
+routes.post('/sign-up', VerifyFields, controllers.Create)
+routes.post('/sign-in', Authentication)
+routes.put('/profiles/:id', Authorization, VerifyFields, controllers.Update)
+routes.delete('/profiles/:id', Authorization, controllers.Exclude)
 
-
-
-module.exports = router
+export default routes

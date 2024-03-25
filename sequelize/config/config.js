@@ -1,22 +1,24 @@
-module.exports = {
+import dotenv from 'dotenv'; 
+
+export default {
   "development": {
-    "username": "root",
+    "username": process.env.USER,
     "password": null,
-    "database": "codespace",
-    "host": "localhost",
-    "dialect": "mysql"
+    "database": process.env.DATABASE,
+    "host": process.env.HOST,
+    "dialect": process.env.DIALECT
   },
   "test": {
-    "username": "root",
+    "username": process.env.USER,
     "password": null,
-    "database": "codespace",
-    "host": "localhost",
-    "dialect": "mysql"
+    "database": process.env.DATABASE,
+    "host": process.env.HOST,
+    "dialect": process.env.DIALECT
   },
   "production": {
-    "username": "root",
+    "username": process.env.USER,
     "password": null,
-    "database": "codespace",
-    "host": "localhost",
-    "dialect": "mysql"
+    "database": process.env.DATABASE,
+    "host": process.env.HOST,
+    "dialect": process.env.DIALECT
 }}
