@@ -4,20 +4,26 @@ import {Router} from 'express'
 import { Authentication } from '../../middlewares/authentication.js'
 import { Authorization } from '../../middlewares/authorization.js'
 import { VerifyFields } from '../../middlewares/fieldsvalidation.js'
+
 // import controllers
 import { Controllers } from '../controller/rules.js'
 
+// instance of controllers
 const controllers = new Controllers() 
+
+// instance of routes
 const routes = Router()
 
-// main route
-routes.get('/registrations', (req, res) => {res.json('Sign up to our website!')})
-
-routes.get('/profiles',Authorization, controllers.GetAll)
-routes.get('/profiles/:id', Authorization, controllers.GetOne)
+// free routes
+routes.get('/', (request, response) => {return response.json('Welcome to the API')})
 routes.post('/sign-up', VerifyFields, controllers.Create)
 routes.post('/sign-in', Authentication)
-routes.put('/profiles/:id', Authorization, VerifyFields, controllers.Update)
-routes.delete('/profiles/:id', Authorization, controllers.Exclude)
+
+// private routes
+routes.use(Authorization) // all routes below will be private
+routes.get('/profiles', controllers.GetAll)
+routes.get('/profiles/:id', controllers.GetOne)
+routes.put('/profiles/:id', VerifyFields, controllers.Update)
+routes.delete('/profiles/:id', controllers.Exclude)
 
 export default routes
